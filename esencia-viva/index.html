@@ -73,6 +73,7 @@ h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute
 .tl .row.now button{border-color:var(--live);background:var(--live-soft)}
 .tl .row.now .ss{color:var(--ink)}
 .tl .row.done button{opacity:.55}
+.tl .row.sel button{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold);opacity:1}
 .tl .gap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:2px 0}
 .tl .gap.now{color:var(--live);font-weight:700}
 details{border-top:1px solid var(--line);padding-top:14px}
@@ -252,13 +253,14 @@ function itemHTML(it,now,inSlot){
 const list=(s,now,inSlot)=>`<ul class="items">${s.items.map(i=>itemHTML(i,now,inSlot)).join("")}</ul>`;
 const rooms=s=>new Set(s.items.map(i=>i.r)).size;
 
-function render(){
-  const now=sim??realNow();
-  document.getElementById("clock").innerHTML=`<span>${dateLabel(now)}</span><b>${hhmm(now)}</b><span>hora de Castellón</span>${sim!=null?'<span class="sim-badge">Simulación</span>':""}`;
+let detail=null;
+const sel=document.getElementById.bind(document);
+function dayOf(a){return Math.min(3,Math.max(0,Math.floor((a-360)/1440)))}
+const dayName=s=>DAYS[s.d]+" de octubre";
+function renderNow(now,st,nx){
   const cur=SLOTS.find(s=>now>=s.a&&now<s.b);
   const next=SLOTS.find(s=>s.a>now);
   const prev=[...SLOTS].reverse().find(s=>s.b<=now);
-  const st=document.getElementById("status"), nx=document.getElementById("next");
   nx.hidden=false;
   if(cur){
     const pct=Math.round((now-cur.a)/(cur.b-cur.a)*100);
@@ -279,36 +281,53 @@ function render(){
     st.innerHTML=`<p class="big">${esc(lab)}</p><p class="sub">Se reanuda a las ${hhmm(next.a)}${next.d!==Math.floor(now/1440)&&next.a-now>360?" del "+DAYS[next.d].toLowerCase():""} · en ${dur(next.a-now)}</p>`;
     nx.innerHTML=`<h2>En breve · ${hhmm(next.a)}–${hhmm(next.b)}</h2>${list(next,now,false)}`;
   }
-  // día
-  let pday=!prev?0:!next?3:Math.min(3,Math.max(0,Math.floor((now-360)/1440)));
-  const d=viewDay??pday;
-  document.getElementById("days").innerHTML=DAYS.map((t,i)=>`<button type="button" data-d="${i}" aria-pressed="${i===d}">${t}</button>`).join("");
-  const ds=SLOTS.filter(s=>s.d===d);
-  let html="";
-  ds.forEach((s,i)=>{
-    if(i>0){const p=ds[i-1];if(s.a>p.b)html+=`<li class="gap ${now>=p.b&&now<s.a?"now":""}">${esc(s.g||"Pausa")} · ${hhmm(p.b)}–${hhmm(s.a)} (${dur(s.a-p.b)})</li>`}
-    const state=now>=s.b?"done":now>=s.a?"now":"";
-    const sum=s.items.length===1?esc(s.items[0].t):`${s.items.length} sesiones en ${rooms(s)} salas`;
-    html+=`<li class="row ${state}"><button type="button" data-a="${s.a}"><span class="tt">${hhmm(s.a)}–${hhmm(s.b)}</span><span class="ss">${sum}</span></button></li>`;
-  });
-  document.getElementById("timeline").innerHTML=html;
-  const top=document.getElementById("topdays");
-  top.hidden=sim==null;
-  if(sim!=null){
-    const sd=Math.min(3,Math.max(0,Math.floor((now-360)/1440)));
-    top.innerHTML=DAYS.map((t,i)=>`<button type="button" data-top="${i}" aria-pressed="${i===sd}">${t}</button>`).join("")+`<button type="button" class="now-btn" data-top="now">Ahora</button>`;
-  }
+  return !prev?0:!next?3:dayOf(now);
 }
-function setSim(a){sim=a;viewDay=null;
-  document.getElementById("simDay").value=Math.min(3,Math.max(0,Math.floor(a/1440)));
-  document.getElementById("simTime").value=hhmm(a);render();window.scrollTo({top:0,behavior:"smooth"})}
-document.getElementById("topdays").addEventListener("click",e=>{const b=e.target.closest("button[data-top]");if(!b)return;
-  if(b.dataset.top==="now"){sim=null;viewDay=null;render();return}
-  const f=SLOTS.find(s=>s.d===+b.dataset.top);if(f)setSim(f.a+1)});
-document.getElementById("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;viewDay=+b.dataset.d;render()});
-document.getElementById("timeline").addEventListener("click",e=>{const b=e.target.closest("button[data-a]");if(b)setSim(+b.dataset.a+1)});
-document.getElementById("simGo").addEventListener("click",()=>{const d=+document.getElementById("simDay").value,t=document.getElementById("simTime").value||"00:00";sim=d*1440+mm(t);viewDay=null;render()});
-document.getElementById("simReset").addEventListener("click",()=>{sim=null;viewDay=null;render()});
+function renderDetail(i,now,st,nx){
+  const s=SLOTS[i], when=`${dayName(s)}, de ${hhmm(s.a)} a ${hhmm(s.b)}`;
+  if(now<s.a){
+    st.innerHTML=`<p class="big">Empieza en ${dur(s.a-now)}</p><p class="sub">${when}${rooms(s)>1?" · "+rooms(s)+" salas":""}</p>${list(s,now,false)}`;
+  }else if(now<s.b){
+    const pct=Math.round((now-s.a)/(s.b-s.a)*100);
+    st.innerHTML=`<div class="state"><span class="dot"></span>En curso · ${hhmm(s.a)}–${hhmm(s.b)}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <p class="sub">Termina en ${dur(s.b-now)}</p>${list(s,now,true)}`;
+  }else{
+    st.innerHTML=`<p class="big">Terminado</p><p class="sub">${when}</p>${list(s,now,false)}`;
+  }
+  const n=SLOTS[i+1];
+  if(n){nx.hidden=false;nx.innerHTML=`<h2>A continuación · ${n.d!==s.d?DAYS[n.d]+" · ":""}${hhmm(n.a)}${n.a>s.b?" · antes, "+esc(gapLabel(s,n)).toLowerCase():""}</h2>${list(n,now,false)}`}
+  else nx.hidden=true;
+  return s.d;
+}
+function render(){
+  const real=realNow(), now=sim??real;
+  sel("clock").innerHTML=`<span>${dateLabel(now)}</span><b>${hhmm(now)}</b><span>hora de Castellón</span>${sim!=null?'<span class="sim-badge">Simulación</span>':""}`;
+  const st=sel("status"), nx=sel("next");
+  const pday=detail!=null?renderDetail(detail,now,st,nx):renderNow(now,st,nx);
+  const d=viewDay??pday;
+  sel("days").innerHTML=DAYS.map((t,i)=>`<button type="button" data-d="${i}" aria-pressed="${i===d}">${t}</button>`).join("");
+  let html="",prevS=null;
+  SLOTS.forEach((s,i)=>{ if(s.d!==d)return;
+    if(prevS&&s.a>prevS.b)html+=`<li class="gap ${now>=prevS.b&&now<s.a?"now":""}">${esc(s.g||"Pausa")} · ${hhmm(prevS.b)}–${hhmm(s.a)} (${dur(s.a-prevS.b)})</li>`;
+    const state=(now>=s.b?"done":now>=s.a?"now":"")+(i===detail?" sel":"");
+    const sum=s.items.length===1?esc(s.items[0].t):`${s.items.length} sesiones en ${rooms(s)} salas`;
+    html+=`<li class="row ${state}"><button type="button" data-i="${i}"><span class="tt">${hhmm(s.a)}–${hhmm(s.b)}</span><span class="ss">${sum}</span></button></li>`;
+    prevS=s;
+  });
+  sel("timeline").innerHTML=html;
+  const top=sel("topdays"), showTop=detail!=null||sim!=null;
+  top.hidden=!showTop;
+  if(showTop) top.innerHTML=DAYS.map((t,i)=>`<button type="button" data-top="${i}" aria-pressed="${i===pday}">${t}</button>`).join("")+`<button type="button" class="now-btn" data-top="now">Ahora</button>`;
+}
+function openDetail(i){detail=i;sim=null;viewDay=null;render();window.scrollTo({top:0,behavior:"smooth"})}
+sel("topdays").addEventListener("click",e=>{const b=e.target.closest("button[data-top]");if(!b)return;
+  if(b.dataset.top==="now"){detail=null;sim=null;viewDay=null;render();return}
+  const f=SLOTS.findIndex(s=>s.d===+b.dataset.top);if(f>=0)openDetail(f)});
+sel("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;viewDay=+b.dataset.d;render()});
+sel("timeline").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b)openDetail(+b.dataset.i)});
+sel("simGo").addEventListener("click",()=>{const d=+sel("simDay").value,t=sel("simTime").value||"00:00";sim=d*1440+mm(t);detail=null;viewDay=null;render()});
+sel("simReset").addEventListener("click",()=>{sim=null;detail=null;viewDay=null;render()});
 render();setInterval(render,20000);
 </script>
 </body>
