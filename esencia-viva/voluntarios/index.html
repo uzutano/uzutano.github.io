@@ -11,17 +11,16 @@
   --bg:#F2F4EF; --surface:#FFFFFF; --ink:#1B2118; --muted:#4F5849; --line:#D5DACD;
   --on-color:#FFFFFF;
   --c-bienvenida:#2F7A3A; --c-normas:#1F5F99; --c-entrada:#6A3FA0; --c-espacio:#0F7377;
-  --c-didactas:#B3531A; --c-tiempo:#B0233A; --c-terminar:#6B5320; --c-diferencias:#3D4CA8;
+  --c-didactas:#8F6400; --c-tiempo:#C2410C; --c-terminar:#5C4033; --c-diferencias:#3D4CA8;
   --c-salud:#C0182D; --c-kit:#4A5560; --c-contactos:#8A2F78;
-  --pending-bg:#FFF4CC; --pending-ink:#6A4B00;
   --font:Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#111410; --surface:#1C211A; --ink:#F1F3EC; --muted:#C2C9BA; --line:#353D30;
-  --pending-bg:#3A3112; --pending-ink:#FFE08A; color-scheme:dark}}
+  color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#111410; --surface:#1C211A; --ink:#F1F3EC; --muted:#C2C9BA; --line:#353D30;
-  --pending-bg:#3A3112; --pending-ink:#FFE08A; color-scheme:dark}
+  color-scheme:dark}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:20px;line-height:1.5;-webkit-text-size-adjust:100%}
@@ -33,34 +32,33 @@ h1{font-size:34px;line-height:1.15;margin:0;text-wrap:balance}
 .back{font-size:18px;font-weight:700;color:var(--c-normas);text-decoration:underline}
 
 .index{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.index a{display:flex;align-items:flex-end;min-height:84px;padding:12px 14px;border-radius:12px;color:var(--on-color);text-decoration:none;font-weight:700;font-size:20px;line-height:1.2}
+.index a{display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-height:104px;padding:12px 14px;border-radius:12px;color:var(--on-color);text-decoration:none;font-weight:700;font-size:20px;line-height:1.2}
+.emo{font-size:34px;line-height:1}
 .index a:focus-visible,.top:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 
-.card{background:var(--surface);border-radius:14px;overflow:hidden;border:1px solid var(--line);scroll-margin-top:12px}
-.card > h2{margin:0;padding:16px 18px;color:var(--on-color);font-size:26px;line-height:1.2;text-wrap:balance}
-.body{padding:18px;display:grid;gap:16px}
+.card{color:var(--on-color);border-radius:14px;scroll-margin-top:12px;padding:20px 18px;display:grid;gap:16px}
+.card > h2{margin:0;font-size:28px;line-height:1.2;text-wrap:balance;display:flex;align-items:center;gap:12px}
+.card > h2 .emo{font-size:38px}
+.body{display:grid;gap:16px}
 .body h3{margin:0;font-size:22px}
 .body p{margin:0}
-ul{margin:0;padding-left:1.1em;display:grid;gap:10px}
-li::marker{font-weight:700}
+.card b{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+ul{margin:0;padding-left:1.1em;display:grid;gap:12px}
 .key{font-size:24px;font-weight:700;line-height:1.3}
-.box{border-radius:10px;padding:14px 16px;border:2px solid currentColor;display:grid;gap:6px}
-.box b{font-size:22px}
-.top{justify-self:start;font-size:17px;font-weight:700;color:var(--muted);text-decoration:underline}
+.top{justify-self:start;font-size:17px;font-weight:700;color:var(--on-color);opacity:.9;text-decoration:underline}
 
 .cmp{display:grid;gap:14px}
-.cmp section{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:12px}
+.cmp section{display:grid;gap:6px;border-top:2px solid rgba(255,255,255,.35);padding-top:12px}
 .cmp section:first-child{border-top:0;padding-top:0}
-.cmp h3{font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
-.cmp .row{display:grid;grid-template-columns:8.2em 1fr;gap:10px}
+.cmp h3{font-size:20px;text-transform:uppercase;letter-spacing:.05em}
+.cmp .row{display:grid;grid-template-columns:8.6em 1fr;gap:10px}
 .cmp .tag{font-weight:700}
 @media (max-width:420px){.cmp .row{grid-template-columns:1fr;gap:0}}
 
-.contact{display:grid;gap:8px;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.contact{display:grid;gap:8px;border:2px solid rgba(255,255,255,.6);border-radius:10px;padding:14px 16px}
 .contact .who{font-weight:700;font-size:21px}
-.contact .num{font-size:28px;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums;user-select:all}
-.btn{display:inline-block;justify-self:start;padding:12px 18px;border-radius:10px;font-weight:700;font-size:20px;color:var(--on-color);text-decoration:none}
-.pending{background:var(--pending-bg);color:var(--pending-ink);border-radius:8px;padding:8px 12px;font-size:18px;font-weight:700}
+.contact .num{font-size:40px;font-weight:700;letter-spacing:.03em;font-variant-numeric:tabular-nums;user-select:all}
+.btn{display:inline-block;justify-self:start;padding:12px 18px;border-radius:10px;font-weight:700;font-size:20px;background:var(--on-color);color:var(--c-salud);text-decoration:none}
 footer{font-size:16px;color:var(--muted)}
 </style>
 </head>
@@ -75,29 +73,27 @@ footer{font-size:16px;color:var(--muted)}
   </header>
 
   <nav class="index" aria-label="Fichas">
-    <a href="#salud" style="background:var(--c-salud)">Salud y emergencias</a>
-    <a href="#contactos" style="background:var(--c-contactos)">Contactos</a>
-    <a href="#bienvenida" style="background:var(--c-bienvenida)">Bienvenida y camiseta</a>
-    <a href="#normas" style="background:var(--c-normas)">Normas del hotel</a>
-    <a href="#entrada" style="background:var(--c-entrada)">La entrada a la sala</a>
-    <a href="#espacio" style="background:var(--c-espacio)">El espacio</a>
-    <a href="#didactas" style="background:var(--c-didactas)">Didactas y conferenciantes</a>
-    <a href="#tiempo" style="background:var(--c-tiempo)">Guardianes del tiempo</a>
-    <a href="#terminar" style="background:var(--c-terminar)">Al terminar</a>
-    <a href="#diferencias" style="background:var(--c-diferencias)">Vivencia o conferencia</a>
-    <a href="#kit" style="background:var(--c-kit)">Kit de cada sala</a>
+    <a href="#salud" style="background:var(--c-salud)"><span class="emo" aria-hidden="true">🚑</span>Salud y emergencias</a>
+    <a href="#contactos" style="background:var(--c-contactos)"><span class="emo" aria-hidden="true">📞</span>Contactos</a>
+    <a href="#bienvenida" style="background:var(--c-bienvenida)"><span class="emo" aria-hidden="true">👕</span>Bienvenida y camiseta</a>
+    <a href="#normas" style="background:var(--c-normas)"><span class="emo" aria-hidden="true">🏨</span>Normas del hotel</a>
+    <a href="#entrada" style="background:var(--c-entrada)"><span class="emo" aria-hidden="true">🚪</span>La entrada a la sala</a>
+    <a href="#espacio" style="background:var(--c-espacio)"><span class="emo" aria-hidden="true">💡</span>El espacio</a>
+    <a href="#didactas" style="background:var(--c-didactas)"><span class="emo" aria-hidden="true">🎤</span>Didactas y conferenciantes</a>
+    <a href="#tiempo" style="background:var(--c-tiempo)"><span class="emo" aria-hidden="true">⏱️</span>Guardianes del tiempo</a>
+    <a href="#terminar" style="background:var(--c-terminar)"><span class="emo" aria-hidden="true">🧹</span>Al terminar</a>
+    <a href="#diferencias" style="background:var(--c-diferencias)"><span class="emo" aria-hidden="true">💃</span>Vivencia o conferencia</a>
+    <a href="#kit" style="background:var(--c-kit)"><span class="emo" aria-hidden="true">🧰</span>Kit de cada sala</a>
   </nav>
 
-  <article class="card" id="salud">
-    <h2 style="background:var(--c-salud)">Salud y emergencias</h2>
+  <article class="card" id="salud" style="background:var(--c-salud)">
+    <h2><span class="emo" aria-hidden="true">🚑</span> Salud y emergencias</h2>
     <div class="body">
       <div class="contact">
         <div class="who">Emergencias</div>
         <div class="num">112</div>
-        <a class="btn" style="background:var(--c-salud)" href="tel:112">Llamar al 112</a>
+        <a class="btn" href="tel:112">Llamar al 112</a>
       </div>
-      <div class="contact" id="ct-violeta"></div>
-      <div class="contact" id="ct-centro"></div>
       <ul>
         <li>Tenemos <b>papelitos con el teléfono del Punto Violeta</b> para dárselo a quien lo necesite: llama ella misma, así respetamos su tiempo.</li>
         <li>Todos llevamos guardada en el móvil la <b>ubicación del centro de salud</b> más cercano.</li>
@@ -107,13 +103,14 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="contactos">
-    <h2 style="background:var(--c-contactos)">Contactos</h2>
+  <article class="card" id="contactos" style="background:var(--c-contactos)">
+    <h2><span class="emo" aria-hidden="true">📞</span> Contactos</h2>
     <div class="body">
-      <p class="key">Ante cualquier duda, pregunta a tu responsable de equipo.</p>
-      <div class="contact" id="ct-vicky"></div>
-      <div class="contact" id="ct-pat"></div>
-      <div class="contact" id="ct-marcelo"></div>
+      <p class="key">Ante cualquier duda, pregunta a tu responsable:</p>
+      <ul>
+        <li><b>🌙 Lunares:</b> Vicky</li>
+        <li><b>☀️ Solares:</b> Pat</li>
+      </ul>
       <ul>
         <li><b>Objetos perdidos:</b> se entregan en el hall de entrada, a Belén.</li>
         <li><b>Sonido:</b> lo gestiona Marcelo Toro con su equipo. Nadie más toca los equipos.</li>
@@ -123,10 +120,10 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="bienvenida">
-    <h2 style="background:var(--c-bienvenida)">Bienvenida y camiseta</h2>
+  <article class="card" id="bienvenida" style="background:var(--c-bienvenida)">
+    <h2><span class="emo" aria-hidden="true">👕</span> Bienvenida y camiseta</h2>
     <div class="body">
-      <p class="key">Viernes 9 · 16:00 · Hall de entrada</p>
+      <p class="key">📅 Viernes 9 · 16:00 · Hall de entrada</p>
       <p>Nos damos un abrazo, nos alineamos, recogemos las camisetas y recorremos juntos los espacios. A las <b>18:00</b> empieza la ceremonia, que vivimos todos juntos, con baile incluido.</p>
       <h3>Cuándo llevar la camiseta</h3>
       <ul>
@@ -138,8 +135,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="normas">
-    <h2 style="background:var(--c-normas)">Normas del hotel</h2>
+  <article class="card" id="normas" style="background:var(--c-normas)">
+    <h2><span class="emo" aria-hidden="true">🏨</span> Normas del hotel</h2>
     <div class="body">
       <p class="key">Son cosa de todos, estemos o no de turno. Somos los guardianes de los espacios.</p>
       <ul>
@@ -155,8 +152,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="entrada">
-    <h2 style="background:var(--c-entrada)">La entrada a la sala</h2>
+  <article class="card" id="entrada" style="background:var(--c-entrada)">
+    <h2><span class="emo" aria-hidden="true">🚪</span> La entrada a la sala</h2>
     <div class="body">
       <ul>
         <li>Puertas <b>cerradas</b> hasta el momento de dejar pasar: puede que ya haya cola.</li>
@@ -171,8 +168,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="espacio">
-    <h2 style="background:var(--c-espacio)">El espacio</h2>
+  <article class="card" id="espacio" style="background:var(--c-espacio)">
+    <h2><span class="emo" aria-hidden="true">💡</span> El espacio</h2>
     <div class="body">
       <ul>
         <li>Cuidamos <b>luces, limpieza, orden y cortinas</b>, para que la sala sea acogedora.</li>
@@ -184,8 +181,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="didactas">
-    <h2 style="background:var(--c-didactas)">Didactas y conferenciantes</h2>
+  <article class="card" id="didactas" style="background:var(--c-didactas)">
+    <h2><span class="emo" aria-hidden="true">🎤</span> Didactas y conferenciantes</h2>
     <div class="body">
       <p class="key">Cuando llegan: «¿Necesitas algo?»</p>
       <ul>
@@ -197,8 +194,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="tiempo">
-    <h2 style="background:var(--c-tiempo)">Guardianes del tiempo</h2>
+  <article class="card" id="tiempo" style="background:var(--c-tiempo)">
+    <h2><span class="emo" aria-hidden="true">⏱️</span> Guardianes del tiempo</h2>
     <div class="body">
       <p class="key">Con mucho cariño, carteles: 5' · 1' · STOP</p>
       <ul>
@@ -210,8 +207,8 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="terminar">
-    <h2 style="background:var(--c-terminar)">Al terminar</h2>
+  <article class="card" id="terminar" style="background:var(--c-terminar)">
+    <h2><span class="emo" aria-hidden="true">🧹</span> Al terminar</h2>
     <div class="body">
       <ul>
         <li>Desalojamos la sala <b>a su hora</b> y con cariño. No queda nadie dentro.</li>
@@ -222,33 +219,33 @@ footer{font-size:16px;color:var(--muted)}
     </div>
   </article>
 
-  <article class="card" id="diferencias">
-    <h2 style="background:var(--c-diferencias)">Vivencia o conferencia</h2>
+  <article class="card" id="diferencias" style="background:var(--c-diferencias)">
+    <h2><span class="emo" aria-hidden="true">💃</span> Vivencia o conferencia</h2>
     <div class="body cmp">
       <section><h3>Sala</h3>
-        <div class="row"><span class="tag">Vivencia</span><span>Despejada, sillas en los laterales</span></div>
-        <div class="row"><span class="tag">Conferencia</span><span>Colocamos las sillas (están en los laterales)</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span>Despejada, sillas en los laterales</span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span>Colocamos las sillas (están en los laterales)</span></div></section>
       <section><h3>Mesas</h3>
-        <div class="row"><span class="tag">Vivencia</span><span>No hay</span></div>
-        <div class="row"><span class="tag">Conferencia</span><span>2 mesas juntas con mantel y camino, jarrón con eucaliptos y una botella de agua por conferenciante</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span>No hay</span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span>2 mesas juntas con mantel y camino, jarrón con eucaliptos y una botella de agua por conferenciante</span></div></section>
       <section><h3>Pantalla</h3>
-        <div class="row"><span class="tag">Vivencia</span><span>No hay</span></div>
-        <div class="row"><span class="tag">Conferencia</span><span>Colocamos pantalla y proyectores, bajamos la pantalla, cuidamos cortinas y luces</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span>No hay</span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span>Colocamos pantalla y proyectores, bajamos la pantalla, cuidamos cortinas y luces</span></div></section>
       <section><h3>Entrar ya empezada</h3>
-        <div class="row"><span class="tag">Vivencia</span><span><b>No</b></span></div>
-        <div class="row"><span class="tag">Conferencia</span><span><b>Sí</b>, con discreción</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span><b>No</b></span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span><b>Sí</b>, con discreción</span></div></section>
       <section><h3>Atención</h3>
-        <div class="row"><span class="tag">Vivencia</span><span>Pendientes de posibles lesiones o invasiones</span></div>
-        <div class="row"><span class="tag">Conferencia</span><span>Bienestar general</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span>Pendientes de posibles lesiones o invasiones</span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span>Bienestar general</span></div></section>
       <section><h3>STOP</h3>
-        <div class="row"><span class="tag">Vivencia</span><span>Se baja la música</span></div>
-        <div class="row"><span class="tag">Conferencia</span><span>Se apaga el micrófono</span></div></section>
+        <div class="row"><span class="tag">💃 Vivencia</span><span>Se baja la música</span></div>
+        <div class="row"><span class="tag">🎤 Conferencia</span><span>Se apaga el micrófono</span></div></section>
       <a class="top" href="#">↑ Volver a las fichas</a>
     </div>
   </article>
 
-  <article class="card" id="kit">
-    <h2 style="background:var(--c-kit)">Kit de cada sala</h2>
+  <article class="card" id="kit" style="background:var(--c-kit)">
+    <h2><span class="emo" aria-hidden="true">🧰</span> Kit de cada sala</h2>
     <div class="body">
       <ul>
         <li>Carteles de tiempo (5' · 1' · STOP)</li>
@@ -257,7 +254,7 @@ footer{font-size:16px;color:var(--muted)}
         <li>Kit de limpieza (toalla)</li>
         <li>Pañuelos de papel y toallitas húmedas</li>
         <li>Carpeta: instrucciones, guía del voluntario y papelitos del Punto Violeta</li>
-        <li>Teléfono de emergencias</li>
+        <li>Teléfono de emergencias (112)</li>
         <li>Celo y alargadores</li>
       </ul>
       <a class="top" href="#">↑ Volver a las fichas</a>
@@ -266,29 +263,5 @@ footer{font-size:16px;color:var(--muted)}
 
   <footer>Según la Guía del Voluntario de Esencia Viva, Castellón, 9–12 de octubre de 2026.</footer>
 </main>
-
-<script>
-/* Rellenar aquí teléfonos y enlace de Google Maps cuando los tengamos. Vacío = "pendiente". */
-const CONTACTOS = {
-  violeta: {who:"Punto Violeta", tel:"", color:"--c-contactos"},
-  centro:  {who:"Centro de salud más cercano", tel:"", maps:"", color:"--c-salud"},
-  vicky:   {who:"Vicky · equipo Lunares", tel:"", color:"--c-contactos"},
-  pat:     {who:"Pat · equipo Solares", tel:"", color:"--c-contactos"},
-  marcelo: {who:"Equipo de sonido · Marcelo Toro", tel:"", color:"--c-contactos"}
-};
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-for(const [k,c] of Object.entries(CONTACTOS)){
-  const el=document.getElementById("ct-"+k); if(!el) continue;
-  let h=`<div class="who">${esc(c.who)}</div>`;
-  if(c.tel){
-    h+=`<div class="num">${esc(c.tel)}</div><a class="btn" style="background:var(${c.color})" href="tel:${esc(c.tel.replace(/[^\d+]/g,""))}">Llamar</a>`;
-  }else h+=`<div class="pending">Teléfono pendiente: os lo enviamos por WhatsApp</div>`;
-  if("maps" in c){
-    h+= c.maps ? `<a class="btn" style="background:var(--c-normas)" href="${esc(c.maps)}" target="_blank" rel="noopener">Abrir en Google Maps</a>`
-               : `<div class="pending">Ubicación en Google Maps pendiente</div>`;
-  }
-  el.innerHTML=h;
-}
-</script>
 </body>
 </html>
