@@ -14,21 +14,22 @@
   --bg:#F3F5EC; --surface:#FFFFFF; --ink:#24301C; --muted:#687160; --line:#DCE0CF;
   --olive:#567425; --gold:#A8832A; --gold-soft:#F2E8CB; --live:#2F7D3B; --live-soft:#E3F1DC;
   --r-conv:#6B4E9B; --r-social:#3F6880; --r-disco:#B95E24; --r-playa:#A07A1F; --r-palma:#5E8A31; --r-jardin:#2F6B3E; --r-discoteca:#9E3A69; --r-gen:#567425;
+  --scrim:rgba(30,40,20,.38); --shadow:0 6px 20px rgba(30,40,20,.22);
   --display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
   --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#141912; --surface:#1D2419; --ink:#E8EBDD; --muted:#9CA48F; --line:#323D2A;
   --olive:#A6C76C; --gold:#D8B65C; --gold-soft:#3A3220; --live:#7FCF86; --live-soft:#1F3320;
-  --r-conv:#B8A0E2; --r-social:#8FB6CF; --r-disco:#EBA06B; --r-playa:#D8B65C; --r-palma:#A8D07A; --r-jardin:#7FC28F; --r-discoteca:#E58BB5; --r-gen:#A6C76C;
+  --r-conv:#B8A0E2; --r-social:#8FB6CF; --r-disco:#EBA06B; --r-playa:#D8B65C; --r-palma:#A8D07A; --r-jardin:#7FC28F; --r-discoteca:#E58BB5; --r-gen:#A6C76C; --scrim:rgba(0,0,0,.55); --shadow:0 6px 20px rgba(0,0,0,.5);
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#141912; --surface:#1D2419; --ink:#E8EBDD; --muted:#9CA48F; --line:#323D2A;
   --olive:#A6C76C; --gold:#D8B65C; --gold-soft:#3A3220; --live:#7FCF86; --live-soft:#1F3320;
-  --r-conv:#B8A0E2; --r-social:#8FB6CF; --r-disco:#EBA06B; --r-playa:#D8B65C; --r-palma:#A8D07A; --r-jardin:#7FC28F; --r-discoteca:#E58BB5; --r-gen:#A6C76C;
+  --r-conv:#B8A0E2; --r-social:#8FB6CF; --r-disco:#EBA06B; --r-playa:#D8B65C; --r-palma:#A8D07A; --r-jardin:#7FC28F; --r-discoteca:#E58BB5; --r-gen:#A6C76C; --scrim:rgba(0,0,0,.55); --shadow:0 6px 20px rgba(0,0,0,.5);
   color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
-.wrap{max-width:640px;margin:0 auto;padding:20px 16px 40px;display:grid;gap:22px}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 96px;display:grid;gap:22px}
 header{display:grid;gap:4px}
 .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--olive);font-weight:600}
 h1{font-family:var(--display);font-style:italic;font-weight:600;font-size:44px;line-height:1;margin:2px 0 0;color:var(--olive)}
@@ -83,6 +84,19 @@ summary{cursor:pointer;font-weight:600;color:var(--olive)}
 .btn{font:inherit;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--olive);background:var(--olive);color:var(--bg);cursor:pointer}
 .btn.ghost{background:transparent;color:var(--olive)}
 footer{color:var(--muted);font-size:12px}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;font:inherit;font-weight:700;font-size:15px;padding:13px 18px;border-radius:99px;border:0;background:var(--olive);color:var(--bg);box-shadow:var(--shadow);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.fab .dot{width:8px;height:8px;border-radius:50%;background:var(--bg)}
+.fab:focus-visible,.x:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.sheet{position:fixed;inset:0;z-index:10}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.sheet-body{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;max-height:85vh;overflow-y:auto;background:var(--bg);border-radius:18px 18px 0 0;box-shadow:var(--shadow);padding:10px 16px calc(24px + env(safe-area-inset-bottom,0px));display:grid;gap:14px}
+.grip{width:40px;height:4px;border-radius:4px;background:var(--line);margin:0 auto}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sheet-head h2{font-size:12px}
+.x{font:inherit;font-size:22px;line-height:1;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+@media (prefers-reduced-motion:no-preference){.sheet:not([hidden]) .sheet-body{animation:up .22s ease-out}.sheet:not([hidden]) .scrim{animation:fade .22s ease-out}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@keyframes fade{from{opacity:0}}
 .home{color:inherit;text-decoration:none;cursor:pointer}
 .home:focus-visible{outline:2px solid var(--olive);outline-offset:3px;border-radius:4px}
 .topdays{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:8px;margin-block:-8px}
@@ -122,6 +136,16 @@ footer{color:var(--muted);font-size:12px}
   <footer>Según el Programa oficial, 9–12 de octubre de 2026. Horarios en hora de Castellón (Europe/Madrid). La página se actualiza sola cada 20 segundos. Toca una franja del día para verla en detalle.</footer>
 </main>
 
+<button type="button" class="fab" id="fab" aria-haspopup="dialog"><span class="dot"></span>¿Qué pasa ahora?</button>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="scrim" data-close></div>
+  <div class="sheet-body">
+    <div class="grip"></div>
+    <div class="sheet-head"><h2 id="sheetTitle">Ahora · <span id="sheetClock"></span></h2><button type="button" class="x" data-close aria-label="Cerrar">×</button></div>
+    <section class="panel" id="sheetNow"></section>
+    <section class="panel compact" id="sheetNext"></section>
+  </div>
+</div>
 <script>
 const ROOM={conv:"Salón Convenciones",conv1:"Salón Convenciones 1",conv2:"Salón Convenciones 2",social:"Salón Social",disco:"Salón Disco",playa:"Playa",palma:"Sala La Palma",jardin:"Jardín",discoteca:"Discoteca",gen:"Todos juntos"};
 const RC={conv:"conv",conv1:"conv",conv2:"conv",social:"social",disco:"disco",playa:"playa",palma:"palma",jardin:"jardin",discoteca:"discoteca",gen:"gen"};
@@ -320,18 +344,24 @@ function render(){
   sel("timeline").innerHTML=html;
   const top=sel("topdays"), showTop=detail!=null||sim!=null;
   top.hidden=!showTop;
-  if(showTop) top.innerHTML=DAYS.map((t,i)=>`<button type="button" data-top="${i}" aria-pressed="${i===pday}">${t}</button>`).join("")+`<button type="button" class="now-btn" data-top="now">Ahora</button>`;
+  if(showTop) top.innerHTML=DAYS.map((t,i)=>`<button type="button" data-top="${i}" aria-pressed="${i===pday}">${t}</button>`).join("");
 }
+function renderSheet(){const real=realNow();sel("sheetClock").textContent=dateLabel(real).replace(/ de \d{4}$/,"")+" · "+hhmm(real);renderNow(real,sel("sheetNow"),sel("sheetNext"))}
+let lastFocus=null;
+function openSheet(){lastFocus=document.activeElement;renderSheet();sel("sheet").hidden=false;document.body.style.overflow="hidden";sel("sheet").querySelector(".x").focus()}
+function closeSheet(){sel("sheet").hidden=true;document.body.style.overflow="";if(lastFocus)lastFocus.focus()}
+sel("fab").addEventListener("click",openSheet);
+sel("sheet").addEventListener("click",e=>{if(e.target.closest("[data-close]"))closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sel("sheet").hidden)closeSheet()});
 function openDetail(i){detail=i;sim=null;viewDay=null;render();window.scrollTo({top:0,behavior:"smooth"})}
 sel("topdays").addEventListener("click",e=>{const b=e.target.closest("button[data-top]");if(!b)return;
-  if(b.dataset.top==="now"){detail=null;sim=null;viewDay=null;render();return}
   const f=SLOTS.findIndex(s=>s.d===+b.dataset.top);if(f>=0)openDetail(f)});
 sel("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;viewDay=+b.dataset.d;render()});
 sel("timeline").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b)openDetail(+b.dataset.i)});
 sel("simGo").addEventListener("click",()=>{const d=+sel("simDay").value,t=sel("simTime").value||"00:00";sim=d*1440+mm(t);detail=null;viewDay=null;render()});
 sel("home").addEventListener("click",e=>{e.preventDefault();sim=null;detail=null;viewDay=null;render();window.scrollTo({top:0,behavior:"smooth"})});
 sel("simReset").addEventListener("click",()=>{sim=null;detail=null;viewDay=null;render()});
-render();setInterval(render,20000);
+render();setInterval(()=>{render();if(!sel("sheet").hidden)renderSheet()},20000);
 </script>
 </body>
 </html>
