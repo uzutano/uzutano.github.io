@@ -83,6 +83,8 @@ summary{cursor:pointer;font-weight:600;color:var(--olive)}
 .btn{font:inherit;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--olive);background:var(--olive);color:var(--bg);cursor:pointer}
 .btn.ghost{background:transparent;color:var(--olive)}
 footer{color:var(--muted);font-size:12px}
+.home{color:inherit;text-decoration:none;cursor:pointer}
+.home:focus-visible{outline:2px solid var(--olive);outline-offset:3px;border-radius:4px}
 .topdays{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:8px;margin-block:-8px}
 .days button.now-btn{border-color:var(--live);color:var(--live)}
 </style>
@@ -92,7 +94,7 @@ footer{color:var(--muted);font-size:12px}
 <main class="wrap">
   <header>
     <div class="eyebrow">XVII Encuentro Español de Biodanza · Castellón</div>
-    <h1>Esencia Viva, ahora</h1>
+    <h1><a href="./" id="home" class="home">Esencia Viva, ahora</a></h1>
     <div class="clock" id="clock"></div>
   </header>
   <nav class="days topdays" id="topdays" hidden aria-label="Cambiar de día"></nav>
@@ -327,6 +329,7 @@ sel("topdays").addEventListener("click",e=>{const b=e.target.closest("button[dat
 sel("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;viewDay=+b.dataset.d;render()});
 sel("timeline").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b)openDetail(+b.dataset.i)});
 sel("simGo").addEventListener("click",()=>{const d=+sel("simDay").value,t=sel("simTime").value||"00:00";sim=d*1440+mm(t);detail=null;viewDay=null;render()});
+sel("home").addEventListener("click",e=>{e.preventDefault();sim=null;detail=null;viewDay=null;render();window.scrollTo({top:0,behavior:"smooth"})});
 sel("simReset").addEventListener("click",()=>{sim=null;detail=null;viewDay=null;render()});
 render();setInterval(render,20000);
 </script>
