@@ -24,6 +24,7 @@
 :root[data-theme="dark"]{
   --bg:#0E110D; --ink:#EEF1EA; --muted:#B4BCAE; --hero:#1E241C; --hero-ink:#F4F6F1; --hero-soft:#AEB8A8;
   --shadow:0 10px 24px -14px rgba(0,0,0,.9); color-scheme:dark}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:19px;line-height:1.55;-webkit-text-size-adjust:100%}
 .wrap{max-width:680px;margin:0 auto;padding:16px 16px 72px;display:grid;gap:18px}
@@ -66,6 +67,45 @@ ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
 .contact .num{font-size:52px;font-weight:800;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums;user-select:all}
 .btn{display:inline-block;justify-self:start;padding:12px 20px;border-radius:999px;font-weight:700;font-size:19px;background:var(--on-color);color:var(--c-salud);text-decoration:none}
 footer{font-size:15px;color:var(--muted);text-align:center}
+
+.cron-open{justify-self:start;font:inherit;font-weight:700;font-size:20px;padding:14px 20px;border-radius:999px;border:0;background:var(--on-color);color:var(--c-tiempo);cursor:pointer;display:inline-flex;gap:10px;align-items:center}
+.cron{position:fixed;inset:0;z-index:20;background:var(--bg);color:var(--ink);overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.cron-panel{max-width:560px;margin:0 auto;display:grid;gap:16px}
+.cron-panel p{margin:0}
+.cron-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cron-head h2{margin:0;font-size:28px;font-weight:800;line-height:1.15}
+.cron-x{font:inherit;font-size:22px;width:48px;height:48px;border-radius:50%;border:2px solid var(--muted);background:transparent;color:var(--ink);cursor:pointer;flex:none}
+.cron-rooms{display:grid;gap:10px}
+.roombtn{font:inherit;text-align:left;display:grid;gap:2px;padding:16px 18px;border-radius:18px;border:0;background:var(--c-tiempo);color:var(--on-color);cursor:pointer}
+.roombtn b{font-size:22px}
+.roombtn span{font-size:17px;opacity:.9}
+.cron-ghost{font:inherit;font-weight:600;font-size:18px;justify-self:start;padding:12px 18px;border-radius:999px;border:2px solid var(--muted);background:transparent;color:var(--ink);cursor:pointer}
+.cron-info{display:grid;gap:6px;padding:18px;border-radius:20px;background:var(--hero);color:var(--hero-ink)}
+.cron-state{font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-soft)}
+.cron-big{font-size:23px;font-weight:700;line-height:1.25}
+.cron-label{font-weight:700;font-size:19px}
+.cron-label span{font-weight:400;font-size:16px;color:var(--muted)}
+.cron-time{font:inherit;font-size:30px;font-weight:700;padding:10px 14px;border-radius:14px;border:2px solid var(--muted);background:transparent;color:var(--ink);justify-self:start}
+.cron-go{font:inherit;font-weight:800;font-size:23px;padding:20px;border-radius:20px;border:0;background:var(--c-bienvenida);color:var(--on-color);cursor:pointer}
+.cron-note{font-size:16px;color:var(--muted)}
+.cron-x:focus-visible,.roombtn:focus-visible,.cron-ghost:focus-visible,.cron-go:focus-visible,.cron-open:focus-visible,.cron-exit:focus-visible,.cron-time:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+.cron-show{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto auto;justify-items:center;align-items:center;gap:8px;text-align:center;color:#FFFFFF;padding:calc(18px + env(safe-area-inset-top,0px)) 16px calc(22px + env(safe-area-inset-bottom,0px));transition:background-color .4s}
+.cron-show.s-calm{background:#2F7A3A}
+.cron-show.s-10{background:#B7791F}
+.cron-show.s-5{background:#D9480F}
+.cron-show.s-2{background:#C81E1E}
+.cron-show.s-1{background:#C81E1E;animation:cronPulse 1s steps(2,end) infinite}
+.cron-show.s-stop{background:#111111}
+@keyframes cronPulse{50%{background:#8E1010}}
+.cron-title{font-size:18px;font-weight:600;opacity:.9;max-width:34ch;text-wrap:balance}
+.cron-bigtxt{font-size:min(21vw,34vh);font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.s-calm .cron-bigtxt{font-size:min(17vw,26vh)}
+.s-1 .cron-bigtxt,.s-stop .cron-bigtxt{font-size:min(30vw,38vh)}
+.s-stop .cron-bigtxt{color:#FF4D4D}
+.cron-small{font-size:clamp(20px,6vw,34px);font-weight:700;font-variant-numeric:tabular-nums}
+.cron-exit{font:inherit;font-weight:600;font-size:17px;padding:10px 22px;border-radius:999px;border:2px solid rgba(255,255,255,.6);background:transparent;color:#FFFFFF;cursor:pointer}
+@media (prefers-reduced-motion: reduce){.cron-show.s-1{animation:none}.cron-show{transition:none}}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.index a{transition:none}}
 </style>
 </head>
@@ -204,7 +244,8 @@ footer{font-size:15px;color:var(--muted);text-align:center}
   <article class="card tint" id="tiempo" style="--c:var(--c-tiempo)">
     <h2><span class="emo" aria-hidden="true">⏱️</span> Guardianes del tiempo</h2>
     <div class="body">
-      <p class="key">Con mucho cariño, carteles: 5' · 1' · STOP</p>
+      <p class="key">Con mucho cariño, carteles: 10' · 5' · 2' · 1' · STOP</p>
+      <button type="button" class="cron-open" id="openCron"><span aria-hidden="true">⏱️</span> Abrir cronómetro de sala</button>
       <ul>
         <li>Con el <b>STOP</b> termina la sesión: en vivencias se <b>baja la música</b>, en conferencias se <b>apaga el micrófono</b>.</li>
         <li>Los horarios se respetan de verdad, también al desalojar la sala.</li>
@@ -255,7 +296,7 @@ footer{font-size:15px;color:var(--muted);text-align:center}
     <h2><span class="emo" aria-hidden="true">🧰</span> Kit de cada sala</h2>
     <div class="body">
       <ul>
-        <li>Carteles de tiempo (5' · 1' · STOP)</li>
+        <li>Carteles de tiempo (10' · 5' · 2' · 1' · STOP)</li>
         <li>Contador de personas</li>
         <li>Spray de fragancia áurica</li>
         <li>Kit de limpieza (toalla)</li>
@@ -270,5 +311,240 @@ footer{font-size:15px;color:var(--muted);text-align:center}
 
   <footer>Según la Guía del Voluntario de Esencia Viva, Castellón, 9–12 de octubre de 2026.</footer>
 </main>
+
+<div class="cron" id="cron" hidden role="dialog" aria-modal="true" aria-label="Cronómetro de sala">
+  <section class="cron-panel" id="cronPick">
+    <div class="cron-head"><h2>⏱️ Cronómetro de sala</h2><button type="button" class="cron-x" id="cronClose" aria-label="Cerrar">✕</button></div>
+    <p>Elige tu sala.</p>
+    <div class="cron-rooms" id="cronRooms"></div>
+    <button type="button" class="cron-ghost" id="cronDemo">Ver una prueba rápida</button>
+  </section>
+  <section class="cron-panel" id="cronSess" hidden>
+    <div class="cron-head"><h2 id="cronRoomName"></h2><button type="button" class="cron-x" id="cronBack" aria-label="Cambiar de sala">←</button></div>
+    <div id="cronInfo" class="cron-info"></div>
+    <label class="cron-label" for="cronEnd">Hora de fin <span>(cámbiala si la sesión va con retraso)</span></label>
+    <input type="time" id="cronEnd" class="cron-time">
+    <button type="button" class="cron-go" id="cronGo">Mostrar al facilitador</button>
+    <p class="cron-note">El teléfono se convierte en un cartel: 10 MIN · 5 MIN · 2 MIN · último minuto · STOP. La pantalla no se apaga.</p>
+  </section>
+  <section class="cron-show s-calm" id="cronShow" hidden>
+    <div class="cron-title" id="cronTitle"></div>
+    <div class="cron-bigtxt" id="cronBig"></div>
+    <div class="cron-small" id="cronSmall"></div>
+    <button type="button" class="cron-exit" id="cronExit">Salir</button>
+  </section>
+</div>
+
+<script>
+const ROOM={conv:"Salón Convenciones",conv1:"Salón Convenciones 1",conv2:"Salón Convenciones 2",social:"Salón Social",disco:"Salón Disco",playa:"Playa",palma:"Sala La Palma",jardin:"Jardín",discoteca:"Discoteca",gen:"Todos juntos"};
+const I=(r,t,who,k,s,e)=>({r,t,who,k,s,e});
+const V="Vivencia";
+const RAW=[
+ [0,"18:00","20:30",null,[I("conv","Acto de Apertura y Vivencia de Inauguración","Ayün (Escuela de Biodanza Castellón) — Lenny Lencina, Sabela Martínez y equipo. Representantes de AEBE","Presentación del XVII Encuentro Español de Biodanza")]],
+ [0,"22:30","23:15","Cena",[I("conv","«Semillas Humanas»","con Neus Odena","Recital de poemas de Rolando Toro")]],
+
+ [1,"09:15","10:45",null,[
+  I("conv","Un mismo Latido: la biología del corazón","Bea Vega, Elisabeth Gómez, Leonor Espinosa, Viviana Canalís",V),
+  I("social","La fuerza salvaje e infinita para renacer y florecer: un nuevo comienzo desde el corazón","Cordula Bruch, André Chales de Beaulieu, Geppe Miglioranza",V),
+  I("disco","Biodanza Clínica: fisiopatología y enfermedades orgánicas. El camino hacia la salud a través de Biodanza","Pilar de la Cueva","Conferencia vivenciada"),
+  I("playa","El poder silencioso que nos vincula con lo vivo","Pamela Dal Col, Pamela Valenzuela, Peggy Saudax y Mounim (percusión y voz)",V)]],
+ [1,"11:15","12:45","Pausa",[
+  I("conv1","Recursos y dinámicas para iniciar la clase e integrar al grupo","Beatriz Benabarre",null,"11:15","12:00"),
+  I("conv1","Criterios de semántica musical en Biodanza","Pablo Terrén",null,"12:00","12:45"),
+  I("conv2","Los ciclos de la vida: abrazando Biodanza y Las Cuatro Estaciones","Tuco Nogales",null,"11:15","12:15"),
+  I("social","La importancia del amor y la trascendencia. Biodanza y Alzheimer","Alma Alvarado","Presentación de libro","11:15","12:00"),
+  I("social","Crónica del esplendor. Poemas inspirados en Biodanza","JuanRa Hernández","Presentación de libro","12:00","12:45"),
+  I("disco","Danzando los vínculos: efectos de Biodanza en la vinculación afectiva, aportaciones desde la Teoría del Apego y la Teoría Polivagal","Marta Solà",null,"11:15","12:00"),
+  I("disco","Biodanza perinatal: un espacio originario de relación","Antonella Gennatiempo",null,"12:00","12:45"),
+  I("palma","Biocentric Steps. Una plataforma de gestión para las Escuelas de Biodanza","Marcelo Toro","Dirigida a directores y coordinadores de escuelas de Biodanza SRT","11:15","12:15"),
+  I("jardin","La fuerza del encuentro. Biodanza en Salud Mental y Acción Social","Giovanna Benatti, Inma Belda, Rafael Pérez, representantes de asociaciones CEAR, Ámbit y testimonios","Mesa redonda")]],
+ [1,"13:00","14:30","Pausa",[
+  I("conv","Danzando en Unidad: el latido del Ser","Marta González, Eryka Cervera, Nataraj García",V),
+  I("social","Abrazando la diversidad: Biodanza y Salud Mental","Giovanna Benatti, Inma Belda, Rafael Pérez",V),
+  I("disco","El éxtasis de lo cotidiano: intimidad con la vida","Aline Reis, Luisa Reyes, Giselle Rocha",V)]],
+ [1,"16:00","17:30","Comida",[
+  I("conv","Más allá y más acá de la piel","Luz Marina, Ana Jódar, Helena Lorenzo",V),
+  I("social","Del instinto a la ternura: la esencia del erotismo","Adriana Laborda, Soraya Gil, Vero Raga",V),
+  I("disco","La neurociencia de los 7 poderes de la Biodanza","Fernando Tucho","Conferencia vivenciada"),
+  I("playa","Retorno al origen","Pilar Peña, Andreína Acri, Patrizia Barassi",V)]],
+ [1,"18:00","19:30","Pausa",[
+  I("conv1","Pasar de la dependencia al pleno desarrollo personal y al disfrute de la vida: el potencial de la Biodanza en el contexto de las adicciones","Cordula Bruch, Geppe Miglioranza",null,"18:00","19:00"),
+  I("conv2","El papel de Biodanza en el rescate del placer y la belleza en la sociedad actual: un diálogo entre Rolando Toro Araneda y el filósofo Byung-Chul Han","Lola Hernando",null,"18:00","19:00"),
+  I("social","La identidad como fenómeno de campo en Biodanza","Kevin Eakins",null,"18:00","18:45"),
+  I("social","Identidad y Libertad: el camino de ser quien somos","Cristiano do Couto Martins",null,"18:45","19:30"),
+  I("disco","Biodanza y Salud Mental: experiencias de investigación y práctica en salud mental en Argentina y España","Belu Lorusso",null,"18:00","18:45"),
+  I("disco","Fibromialgia y Biodanza: experiencias con grupos de pacientes en el hospital","Mercè Prats",null,"18:45","19:30"),
+  I("palma","El Hilo de la vida","Leda Escudero","Performance creativa sobre la publicación del libro «El Hilo»","18:00","19:00")]],
+ [1,"19:45","21:15","Pausa",[
+  I("conv","Despertar la inocencia original","Ruth Vilar, Ferrán Balaguer, Kety Betés",V),
+  I("social","La amistad como fuente de salud","Agustín Terrén, Marinella Ascione, Pablo Terrén",V),
+  I("disco","Danzando el mito de Isis y Osiris","Mara Galián, Guadalupe Marcote-Lago, Angélica Medina",V)]],
+ [1,"23:00","24:15","Cena",[I("discoteca","«Noches Improcedentes»","con IMPRO-PLANA","Espectáculo de improvisación teatral")]],
+ [1,"24:30","26:00",null,[I("discoteca","DJ Tuco","","Bio-Ecstatic Dance Pink Floyd")]],
+
+ [2,"09:30","11:00",null,[
+  I("social","El placer de danzar en espacios seguros","Ana Lapeña, Belén Zarralanga, Galaxia Barón, Sofía Carrizo, Concha González","Vivencia · Comisiones de Género de AEBE y BiodanzaYa"),
+  I("disco","La banda sonora de tu vida","Jesús Martín, Santiago Jiménez, Beatriz Benabarre",V),
+  I("playa","La voz del movimiento, arena y mar","Clelia Pereira, Mª Claudia Gatto, Leda Escudero",V),
+  I("jardin","La piel del amor","Antonio Juanas, Alma Alvarado, Ydamys García",V)]],
+ [2,"11:15","12:45","Pausa",[I("conv","Influencia del carácter y la coraza en la conexión con nuestra matriz social y cósmica y su relación con la danza y la meditación","Xavier Serrano · Director de la Escuela Española de Terapia Reichiana","Clase Magistral · Masterclass")]],
+ [2,"13:00","14:30","Pausa",[
+  I("conv","Las diferentes caras del amor","Alicia Santos, Augusto Magdalena, Luis Otavio Pimentel",V),
+  I("social","Ritmo orgánico, cadencia y armonía","Rosabel Lacoma, Marina Bacchella, Carlos Gracia",V),
+  I("disco","Danza tu vida: el coraje de Ser","Pedro Luis Royo, Isabel Fontanillas, Elena Díaz",V)]],
+ [2,"16:00","17:30","Comida",[
+  I("conv","Danzando la Paz","Danielle Tavares, Anna María Silva, Nuno Pinto, Cristiano Martins",V),
+  I("social","El susurro vivo del Ser","Rosarinho Carvalho, Fernanda Pinto, Rocío Castro, Sara Rodríguez",V),
+  I("disco","Evolución Espiritual y Biodanza","David Díez","Conferencia vivenciada"),
+  I("playa","Entre el mar y el cielo: despertar el deseo de vivir","Gabriela Freyhoff, Lenny Lencina",V)]],
+ [2,"18:00","19:30","Pausa",[
+  I("conv1","Revolución Afectiva: transformar la sociedad a través del sentir, el encuentro y contacto","Claudia Altamirano",null,"18:00","19:00"),
+  I("conv2","MT, MT. Modelo Teórico y MiTología","Jesús Martín",null,"18:00","18:45"),
+  I("conv2","La Bio de la Danza","Helena Lorenzo","Presentación de libro","18:45","19:30"),
+  I("social","El Árbol del Tiempo: la memoria de los Rolandos","Marcelo Toro",null,"18:00","18:45"),
+  I("social","Biojuego Musical","Santiago Jiménez","Primer juego de mesa de Biodanza","18:45","19:30"),
+  I("disco","La Vivencia, una aproximación al Amar","Pamela Valenzuela",null,"18:00","18:45"),
+  I("disco","Sexualidad Biocéntrica: claves biocéntricas para la integración sana, gozosa y consciente de la línea de sexualidad en Biodanza","Bea Vega",null,"18:45","19:30"),
+  I("palma","La aventura de crear un grupo de Biodanza","Diana Texeira",null,"18:00","18:45"),
+  I("palma","Mis vivencias facilitando Biodanza Social y Educación Biocéntrica en Lanzarote","Pedro Luis Royo",null,"18:45","19:30"),
+  I("jardin","Cómo afecta nuestra socialización en la facilitación de Biodanza","Ana Lapeña, Belén Zarralanga, Galaxia Barón","Mesa redonda")]],
+ [2,"19:45","21:15","Pausa",[
+  I("conv","Poética de Eros: Y el verbo se hizo carne y habitó en el encuentro","Maite Bernadelle, JuanRa Hernández, Lágrimas Álvarez, Flavio Boffetti",V),
+  I("social","La esencia viva de la amistad","Fernando Tucho, Beatriz Palomares, Óscar Imbernón",V),
+  I("disco","El arte de volver a lo esencial","Maribel Galvañ, Stella Vicens, Mª José Juan",V)]],
+ [2,"23:00","24:30","Cena",[
+  I("discoteca","Recital de Luan Riu","",""),
+  I("discoteca","Espectáculo Flamenco","con Selene Fernández y Sergio García",""),
+  I("discoteca","Clownclusiones","con Virginia Imáz","")]],
+ [2,"24:30","26:00",null,[I("discoteca","DJ Party","con Mara Galián & Mirko Nisenson","")]],
+
+ [3,"09:30","11:00",null,[
+  I("conv","El renacer del corazón en la gran tribu","Rakel Ampudia, Carlos Orellana, Claudia Altamirano",V),
+  I("social","El camino al éxtasis: el asombro de vivir","Elisa Canti, Walter Orellana, Javier Velasco",V),
+  I("disco","Unidad: un viaje de vuelta al hogar","Laura Urrutia, Laura García, Carmen Cuartango",V),
+  I("playa","Instantes de eternidad","Marcelo Toro, Viviana Canalís",V)]],
+ [3,"11:15","12:45","Pausa",[
+  I("conv1","Cooperamos o morimos: la vinculación afectiva en un mundo globalizado","Julio Sacristán y Margot Muriel (BiodanzaYa) y representantes de otras asociaciones de Biodanza en España","Mesa redonda a cargo de BiodanzaYa"),
+  I("conv2","Biodanza y espiritualidad","Pepa González",null,"11:15","12:00"),
+  I("conv2","Biodanza y runas","Diana Fernández-Calvillo",null,"12:00","12:45"),
+  I("social","El «Viaje del Héroe» a través de los 12 arquetipos","Flavio Boffetti",null,"11:15","12:15"),
+  I("disco","Beethoven y la Biodanza: un héroe hecho de música","Jaime Gallego",null,"11:15","12:00"),
+  I("disco","La tecnología al servicio de la vida: recursos de sonido y herramientas digitales para crear, musicalizar y sostener sesiones de Biodanza","J. Miguel Ruiz",null,"12:00","12:45"),
+  I("palma","Biodanza y Bullying: contribución de la Biodanza a la reducción y prevención del acoso escolar","Rosarinho Carvalho",null,"11:15","12:00"),
+  I("palma","El hilo rojo de la vivencia: pedagogía y narrativa de los cuentos biodanzados para la integración biocéntrica","Isabel Fontanillas",null,"12:00","12:45")]],
+ [3,"13:00","14:45","Pausa",[I("gen","Ceremonia de Clausura","","Comida incluida")]]
+];
+const mm=t=>{const[h,m]=t.split(":").map(Number);return h*60+m};
+
+/* ---------- Cronómetro de sala ---------- */
+const SES=[];
+RAW.forEach(([d,s,e,g,items])=>items.forEach(it=>{
+  SES.push({...it,d,a:(d*1440+mm(it.s||s))*60,b:(d*1440+mm(it.e||e))*60});
+}));
+const ROOMS=Object.keys(ROOM).filter(k=>SES.some(x=>x.r===k));
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const hm=sec=>{const m=Math.floor(sec/60),x=((m%1440)+1440)%1440;return pad(Math.floor(x/60))+":"+pad(x%60)};
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const DIAS=["viernes","sábado","domingo","lunes"];
+
+/* segundos desde el viernes 9 a las 00:00, hora de Castellón */
+function nowSec(){
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Madrid",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  const days=Math.round((Date.UTC(+p.year,+p.month-1,+p.day)-Date.UTC(2026,9,9))/864e5);
+  return days*86400+(+p.hour)*3600+(+p.minute)*60+(+p.second);
+}
+function sessionFor(room,t){
+  const list=SES.filter(x=>x.r===room).sort((x,y)=>x.a-y.a);
+  return list.find(x=>t>=x.a&&t<x.b)||list.find(x=>x.a>t)||null;
+}
+
+let room=null, endOverride=null, demo=null, tick=null, lock=null;
+
+function openCron(){
+  $("cron").hidden=false; document.body.style.overflow="hidden";
+  showPick();
+}
+function closeCron(){
+  stopShow(); $("cron").hidden=true; document.body.style.overflow="";
+}
+function showPick(){
+  stopShow();
+  $("cronPick").hidden=false; $("cronSess").hidden=true; $("cronShow").hidden=true;
+  const t=nowSec();
+  $("cronRooms").innerHTML=ROOMS.map(k=>{
+    const s=sessionFor(k,t);
+    let sub="Sin más sesiones";
+    if(s) sub= t>=s.a ? "Ahora · termina "+hm(s.b) : "Próxima · "+(Math.floor(s.a/86400)!==Math.floor(t/86400)?DIAS[s.d]+" ":"")+hm(s.a);
+    return `<button type="button" class="roombtn" data-room="${k}"><b>${escH(ROOM[k])}</b><span>${sub}</span></button>`;
+  }).join("");
+}
+function showSess(){
+  stopShow();
+  $("cronPick").hidden=true; $("cronSess").hidden=false; $("cronShow").hidden=true;
+  const t=nowSec(), s=sessionFor(room,t);
+  $("cronRoomName").textContent=ROOM[room];
+  if(!s){$("cronInfo").innerHTML=`<p class="cron-big">No hay más sesiones en esta sala.</p>`;$("cronEnd").value="";return}
+  const live=t>=s.a;
+  $("cronInfo").innerHTML=`<p class="cron-state">${live?"En curso":"Próxima sesión · "+DIAS[s.d]+" "+hm(s.a)}</p>
+    <p class="cron-big">${escH(s.t)}</p>${s.who?`<p>${escH(s.who)}</p>`:""}
+    <p class="cron-state">${hm(s.a)} – ${hm(s.b)}</p>`;
+  $("cronEnd").value=hm(s.b);
+}
+function endTarget(){
+  const t=nowSec(), v=$("cronEnd").value;
+  if(!v) return null;
+  const [h,m]=v.split(":").map(Number);
+  /* la hora de fin elegida, la próxima vez que llegue (sirve también pasada la medianoche) */
+  let base=Math.floor(t/86400)*86400+h*3600+m*60;
+  if(base<=t-3600) base+=86400;
+  return base;
+}
+async function keepAwake(){
+  try{ if("wakeLock" in navigator){ lock=await navigator.wakeLock.request("screen") } }catch(e){}
+}
+document.addEventListener("visibilitychange",()=>{ if(!$("cronShow").hidden&&document.visibilityState==="visible") keepAwake() });
+
+function startShow(isDemo){
+  $("cronPick").hidden=true; $("cronSess").hidden=true; $("cronShow").hidden=false;
+  if(isDemo){ demo={start:Date.now(),from:11*60+5}; endOverride=null; $("cronTitle").textContent="Prueba · 20× más rápido"; }
+  else{ demo=null; endOverride=endTarget(); const s=sessionFor(room,nowSec()); $("cronTitle").textContent=(s?s.t:ROOM[room]); }
+  keepAwake();
+  try{ const el=$("cron"); if(el.requestFullscreen) el.requestFullscreen().catch(()=>{}) }catch(e){}
+  render(); tick=setInterval(render,250);
+}
+function stopShow(){
+  clearInterval(tick); tick=null;
+  try{ lock&&lock.release() }catch(e){} lock=null;
+  try{ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}) }catch(e){}
+}
+function remaining(){
+  if(demo) return demo.from-Math.floor((Date.now()-demo.start)/1000*20);
+  return endOverride==null?null:endOverride-nowSec();
+}
+function render(){
+  const r=remaining(), box=$("cronShow");
+  let state, big, small;
+  if(r==null){state="s-calm";big="—";small="Elige la hora de fin"}
+  else if(r<=0){state="s-stop";big="STOP";small=demo?"Fin de la prueba":"Tiempo terminado · "+hm(endOverride)}
+  else if(r<=60){state="s-1";big="0:"+pad(r);small="Último minuto"}
+  else if(r<=120){state="s-2";big="2 MIN";small="Quedan "+Math.floor(r/60)+":"+pad(r%60)}
+  else if(r<=300){state="s-5";big="5 MIN";small="Quedan "+Math.floor(r/60)+":"+pad(r%60)}
+  else if(r<=600){state="s-10";big="10 MIN";small="Quedan "+Math.floor(r/60)+":"+pad(r%60)}
+  else{state="s-calm";const m=Math.ceil(r/60);big=m>=60?Math.floor(m/60)+" h "+pad(m%60):m+" min";small="Termina a las "+(demo?"—":hm(endOverride))}
+  box.className="cron-show "+state;
+  $("cronBig").textContent=big; $("cronSmall").textContent=small;
+  if(demo&&r<=-4){demo=null;showSess()}
+}
+
+$("openCron").addEventListener("click",openCron);
+$("cronClose").addEventListener("click",closeCron);
+$("cronRooms").addEventListener("click",e=>{const b=e.target.closest("[data-room]");if(!b)return;room=b.dataset.room;showSess()});
+$("cronBack").addEventListener("click",showPick);
+$("cronGo").addEventListener("click",()=>startShow(false));
+$("cronDemo").addEventListener("click",()=>startShow(true));
+$("cronExit").addEventListener("click",()=>{ if(room) showSess(); else showPick(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("cron").hidden) closeCron() });
+</script>
 </body>
 </html>
